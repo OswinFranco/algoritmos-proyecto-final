@@ -91,5 +91,27 @@ void leer() {
     } while (feof(archivo) == 0);
     fclose(archivo);
 }
+void crear() {
+    FILE *archivo = fopen(nombre_archivo, "a+b");
+    char res;
+    diccionario diccionario;
+    do {
+        fflush(stdin);
+        cout << "Ingrese Palabra: ";
+        cin >> diccionario.palabra;
+        cin.ignore();
 
+        cout << "Ingrese Traduccion: ";
+        cin.getline(diccionario.traduccion, 500);
+
+        cout << "Ingrese Funcionalidad: ";
+        cin.getline(diccionario.funcionalidad, 500);
+
+        fwrite(&diccionario, sizeof(diccionario), 1, archivo);
+        cout << "Desea agregar otra palabra (s/n): ";
+        cin >> res;
+
+    } while (res == 's' || res == 'S');
+    fclose(archivo);
+}
 
