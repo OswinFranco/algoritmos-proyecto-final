@@ -34,3 +34,16 @@ int main() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             entradaValida = false;
         }
+if (!entradaValida) {
+            cout << "Entrada no valida. Ingrese un numero entre 1 y 7." << endl;
+        } else {
+            switch (opcion) {
+                 case 1:
+           			 crear();
+           			 break;
+       			 case 2:
+           			 leer();
+           			 break;
+      			 case 3:
+           			 actualizar();
+           			 break;
