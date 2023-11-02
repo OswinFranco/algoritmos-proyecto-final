@@ -68,27 +68,5 @@ if (!entradaValida) {
 void mostrarMenu(){
     cout<<""Menu:\n1. Agregar Palabra\n2. Ver Palabras\n3. Actualizar Palabra\n4. Borrar Palabra\n5. Limpiar\n6. Traducir\n7. Salir\n";
 }
-void leer() {
-      system("cls");
-    FILE *archivo = fopen(nombre_archivo, "rb");
-    if (!archivo) {
-        archivo = fopen(nombre_archivo, "w+b");
-    }
-    diccionario diccionario;
-    int id = 0;
-    fread(&diccionario, sizeof(diccionario), 1, archivo);
-    cout << "__________________________________" << endl;
-    cout << "id" << " | " << "   Palabra:   " << " | " << "Traduccion: " << " | " << "Funcionalidad: " << endl;
-    do {
-        cout << id << "    | " << diccionario.palabra << " | " << diccionario.traduccion << " | " << diccionario.funcionalidad << endl;
-        cout << endl;
-        cout << endl;
-        cout << endl;
-        cout << endl;
-        
-        fread(&diccionario, sizeof(diccionario), 1, archivo);
-        id += 1;
-    } while (feof(archivo) == 0);
-    fclose(archivo);
-}
+
 
