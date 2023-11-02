@@ -47,3 +47,21 @@ if (!entradaValida) {
       			 case 3:
            			 actualizar();
            			 break;
+                 case 4:
+          			  borrar();
+          			  break;
+          		 case 5:
+         			 system("cls || clear");
+                     break;
+       			 case 6:
+         			 traducirCodigo();
+           			 break;
+                 case 7:
+                	cout << "Saliendo del programa." << endl;
+                    break;                    
+            }
+        }
+    } while (opcion != 7);
+
+    return 0;
+}
