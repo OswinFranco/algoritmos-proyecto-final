@@ -18,3 +18,19 @@ void actualizar();
 void borrar();
 void traducirCodigo();
 void mostrarMenu(
+int main() {
+    int opcion;
+    bool entradaValida = false;
+
+    do {
+        mostrarMenu();
+
+        cout << "Ingrese la opcion deseada (del 1 al 7): ";
+
+        if (cin >> opcion) {
+            entradaValida = (opcion >= 1 && opcion <= 7);
+        } else {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            entradaValida = false;
+        }
