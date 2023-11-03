@@ -114,4 +114,56 @@ void crear() {
     } while (res == 's' || res == 'S');
     fclose(archivo);
 }
+void actualizar() {
+     FILE *archivo = fopen(nombre_archivo, "r+b");
+    diccionario diccionario;
+    int id = 0;
+    cout << "Ingrese el ID que desea actualizar: ";
+    cin >> id;
+    fseek(archivo, id * sizeof(diccionario), SEEK_SET);
 
+    cout << "Ingrese la palabra: ";
+    cin >> diccionario.palabra;
+    cin.ignore();
+
+    cout << "Ingrese Traduccion: ";
+    cin.getline(diccionario.traduccion, 50);
+
+    cout << "Ingrese Funcionalidad: ";
+    cin.getline(diccionario.funcionalidad, 50);
+
+    fwrite(&diccionario, sizeof(diccionario), 1, archivo);
+
+    fclose(archivo);
+    leer();
+}
+
+void borrar() {
+     const char *nombre_archivo_temp = "archivo_temp.dat";
+    FILE *archivo_temp = fopen(nombre_archivo_temp, "w+b");
+    FILE *archivo = fopen(nombre_archivo, "rb");
+    diccionario diccionario;
+    int id = 0, id_n = 0;
+    cout << "Ingrese el ID a eliminar: ";
+    cin >> id;
+
+    while (fread(&diccionario, sizeof(diccionario), 1, archivo)) {
+        if (id_n != id) {
+            fwrite(&diccionario, sizeof(diccionario), 1, archivo_temp);
+            id_n++;
+        }
+    }
+
+    fclose(archivo);
+    fclose(archivo_temp);
+
+    archivo_temp = fopen(nombre_archivo_temp, "rb");
+    archivo = fopen(nombre_archivo, "wb");
+    while (fread(&diccionario, sizeof(diccionario), 1, archivo_temp)) {
+        fwrite(&diccionario, sizeof(diccionario), 1, archivo);
+    }
+
+    fclose(archivo);
+    fclose(archivo_temp);
+    leer();
+}
