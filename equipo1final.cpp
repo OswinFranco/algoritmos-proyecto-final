@@ -17,7 +17,7 @@ void crear();
 void actualizar();
 void borrar();
 void traducirCodigo();
-void mostrarMenu(
+void mostrarMenu();
 int main() {
     int opcion;
     bool entradaValida = false;
