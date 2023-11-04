@@ -66,7 +66,7 @@ if (!entradaValida) {
     return 0;
 }
 void mostrarMenu(){
-    cout<<""Menu:\n1. Agregar Palabra\n2. Ver Palabras\n3. Actualizar Palabra\n4. Borrar Palabra\n5. Limpiar\n6. Traducir\n7. Salir\n";
+    cout<<"Menu:\n1. Agregar Palabra\n2. Ver Palabras\n3. Actualizar Palabra\n4. Borrar Palabra\n5. Limpiar\n6. Traducir\n7. Salir\n";
 }
 void leer() {
       system("cls");
