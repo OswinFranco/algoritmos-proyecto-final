@@ -167,3 +167,47 @@ void borrar() {
     fclose(archivo_temp);
     leer();
 }
+void traducirCodigo() {
+    cin.ignore();  // Limpia el buffer de entrada.
+    string codigo;
+    cout << "Ingresa el codigo C++ a traducir (termina con una linea vacia):\n";
+    cout<<endl;
+    // Lee el código línea por línea y agrégalo a la variable 'codigo'.
+    string linea;
+    while (getline(cin, linea) && !linea.empty()) {
+        codigo += linea + '\n';
+    }
+
+    ifstream archivo(nombre_archivo, ios::in | ios::binary);
+    diccionario palabra;
+    while (archivo.read(reinterpret_cast<char*>(&palabra), sizeof(diccionario))) {
+        // Reemplace las palabras en el código por sus traducciones.
+        string palabraBuscar(palabra.palabra);
+        string palabraReemplazar(palabra.traduccion); // Declaración de palabraReemplazar aquí
+        size_t posicion = codigo.find(palabraBuscar);
+        while (posicion != string::npos) {
+            codigo.replace(posicion, palabraBuscar.length(), palabraReemplazar);
+            posicion = codigo.find(palabraBuscar);
+        }
+    }
+    
+    archivo.close();
+
+    // Reemplaza las llaves por "inicio" y "fin" concatenadas con el nombre de la estructura de control.
+    size_t inicio_pos = codigo.find("{");
+    while (inicio_pos != string::npos) {
+        size_t fin_pos = codigo.find("}", inicio_pos);
+        if (fin_pos != string::npos) {
+            string control_structure = codigo.substr(inicio_pos + 1, fin_pos - inicio_pos - 1);
+            string translation = " inicio si " + control_structure + " fin si ";
+            codigo.replace(inicio_pos, fin_pos - inicio_pos + 1, translation);
+        }
+        inicio_pos = codigo.find("{", inicio_pos + 1);
+    }
+
+    cout << "\nCodigo traducido:\n" << codigo << endl;
+    cout << endl;
+        cout << endl;
+        cout << endl;
+   
+}
