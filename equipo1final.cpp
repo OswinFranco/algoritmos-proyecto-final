@@ -174,7 +174,46 @@ void traducirCodigo() {
     cout<<endl;
     // Lee el código línea por línea y agrégalo a la variable 'codigo'.
     string linea;
+    string inicioReemplazarSi = " Inicio Si";
+    string finReemplazarSi = "Fin Si \n Entonces Inicio Entonces";
+    string finReemplazarElse = " Fin entonces ";
+
+    bool dentroDeElseIf = false;
+    bool dentroDeIf = false;
+
     while (getline(cin, linea) && !linea.empty()) {
+                if (linea.find("if (") != string::npos) {
+            dentroDeIf = true;
+
+            size_t posicionInicio = linea.find("{");
+                        while (posicionInicio != string::npos) {
+                            linea.replace(posicionInicio, 1, inicioReemplazarSi);
+                            posicionInicio = linea.find("{", posicionInicio + inicioReemplazarSi.length());
+                                }
+
+        }else if (linea.find("}else{") != string::npos) {
+                 if (dentroDeIf) {
+                size_t posicionInicio = linea.find("}else{");
+                                while (posicionInicio != string::npos) {
+                                    linea.replace(posicionInicio, 6, finReemplazarSi);
+                                       posicionInicio = linea.find("}else{", posicionInicio + finReemplazarSi.length());
+                                }
+                dentroDeIf = false;
+                dentroDeElseIf = true;
+            } 
+
+                }else if (linea.find("}") != string::npos) {    
+                 if (dentroDeElseIf) {
+                             size_t posicionInicio = linea.find("}");
+                                while (posicionInicio != string::npos) {
+                                    linea.replace(posicionInicio, 1, finReemplazarElse);
+                                       posicionInicio = linea.find("}", posicionInicio + finReemplazarElse.length());
+                                }
+                         dentroDeElseIf=false;
+                 }
+
+            }    
+
         codigo += linea + '\n';
     }
 
@@ -192,18 +231,6 @@ void traducirCodigo() {
     }
     
     archivo.close();
-
-    // Reemplaza las llaves por "inicio" y "fin" concatenadas con el nombre de la estructura de control.
-    size_t inicio_pos = codigo.find("{");
-    while (inicio_pos != string::npos) {
-        size_t fin_pos = codigo.find("}", inicio_pos);
-        if (fin_pos != string::npos) {
-            string control_structure = codigo.substr(inicio_pos + 1, fin_pos - inicio_pos - 1);
-            string translation = " inicio si " + control_structure + " fin si ";
-            codigo.replace(inicio_pos, fin_pos - inicio_pos + 1, translation);
-        }
-        inicio_pos = codigo.find("{", inicio_pos + 1);
-    }
 
     cout << "\nCodigo traducido:\n" << codigo << endl;
     cout << endl;
